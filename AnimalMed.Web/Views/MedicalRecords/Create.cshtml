@@ -1,0 +1,37 @@
+﻿@model AnimalMed.DTO.MedicalRecords.EditMedicalRecordModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Create</h2>
+<h4>EditMedicalRecordModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" asp-antiforgery="true" asp-route-animalId="@Context.Request.Query["animalId"]">
+            <div asp-validation-summary="None" class="text-danger"></div>
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+                <input asp-for="Id" type="hidden" class="form-control" />
+            <div class="form-group">
+                <label asp-for="MedicalRecordUrl" class="control-label"></label>
+                <input asp-for="MedicalRecordUrl" type="hidden" class="form-control" />
+                <input type="file" accept="application/pdf" name="file" />
+                <span asp-validation-for="MedicalRecordUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnimalId" class="control-label"></label>
+                <select asp-for="AnimalId" asp-items="@ViewBag.Animals"></select>
+                <span asp-validation-for="AnimalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index" asp-route-animalId="@Context.Request.Query["animalId"]">Back to List</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

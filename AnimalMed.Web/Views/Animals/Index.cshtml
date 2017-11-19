@@ -1,0 +1,77 @@
+﻿@model IEnumerable<AnimalMed.DTO.Animals.AnimalModel>
+
+@{
+    ViewData["Title"] = "Animals";
+}
+
+<h2>Animals</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<div class="row">
+    <div class="container">
+        <p style="padding: 5px;">Filters: </p>
+        <div><input id="tbName" type="text" name="Name" value="" placeholder="Name" /></div>
+        <button id="btnSearch">Search</button>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PasswordNo)
+            </th>
+            <th>
+                Image
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PasswordNo)
+                </td>
+                <td>
+                    <img src="@item.ImageUrl" alt="image" height="30" />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("#btnSearch").click(function (e) {
+                e.preventDefault();
+
+                window.location.href = window.location.href.split('?')[0] + "?name=" + $("#tbName").val();
+            });
+        });
+    </script>
+}

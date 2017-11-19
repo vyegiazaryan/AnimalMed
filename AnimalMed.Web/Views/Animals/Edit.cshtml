@@ -1,0 +1,49 @@
+﻿@model AnimalMed.DTO.Animals.EditAnimalModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Edit</h2>
+<h4>Animal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="None" class="text-danger"></div>
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordNo" class="control-label"></label>
+                <input asp-for="PasswordNo" class="form-control" />
+                <span asp-validation-for="PasswordNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <img id="imgOutput" height="40" src="@Model.ImageUrl"/>
+                <input asp-for="ImageUrl" type="hidden" />
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input id="fuImage" type="file" accept="image/*" name="image" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $("#fuImage").change(function (e) {
+                $("#imgOutput").prop("src", URL.createObjectURL(e.target.files[0]));
+            });
+        });
+    </script>
+}
